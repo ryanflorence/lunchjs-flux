@@ -70,9 +70,14 @@ var App = module.exports = React.createClass({
 
     return (
       <div className="App" >
-        <ul className="Nav">
-          {this.renderAuthLink()}
-        </ul>
+        <div className="Nav">
+          <ul className="Nav__List Nav__List--left">
+            {this.renderLeftNav()}
+          </ul>
+          <ul className="Nav__List Nav__List--right">
+            {this.renderRightNav()}
+          </ul>
+        </div>
         <div
           className={padClass}
           onClick={this.handleClick}
@@ -85,12 +90,19 @@ var App = module.exports = React.createClass({
     );
   },
 
-  renderAuthLink: function() {
-    return this.state.auth.authenticated ?
-      <li className="Nav__Item">
-        <img className="Nav__Img" src={this.state.auth.user.avatar_url} height="24"/>
-        Logged in as {this.state.auth.user.name}: <Link className="Nav__Link" to="logout">Logout</Link>
-      </li> :
+  renderLeftNav: function() {
+    if (this.state.auth.authenticated)
+      return (
+        <li className="Nav__Item">
+          <img className="Nav__Img" src={this.state.auth.user.avatar_url} height="24"/>
+          Logged in as {this.state.auth.user.name}
+        </li>
+      );
+  },
+
+  renderRightNav: function() {
+    return (this.state.auth.authenticated) ?
+      <li><Link className="Nav__Link" to="logout">Logout</Link></li> :
       <li><button onClick={this.signIn}>Sign in</button></li>;
   }
 

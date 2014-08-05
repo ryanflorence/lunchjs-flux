@@ -17,25 +17,42 @@ a.active {
 }
 
 .Nav {
-  list-style-type: none;
-  position: fixed;
   left: 0;
   right: 0;
-  margin: 0;
   background: #fff;
-  height: 30px;
+  height: 24px;
   padding: 10px;
 }
 
+.Nav__List {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.Nav__List--left {
+  float: left;
+}
+
+.Nav__List--right {
+  float: right;
+}
+
+
 .Nav__Img {
   margin-right: 5px;
+  vertical-align: middle;
+}
+
+.Nav__Link {
+  color: inherit;
 }
 
 .Pad {
   position: fixed;
   left: 0;
   right: 0;
-  top: 50px;
+  top: 44px;
   bottom: 0;
 }
 
