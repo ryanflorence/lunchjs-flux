@@ -10,17 +10,15 @@ var Stamp = require('./Stamp');
 function getStateFromStores() {
   return {
     auth: AuthStore.get(),
-    stamps: StampStore.getAll()
+    stamps: StampStore.getAll(),
+    userCursors: StampStore.getUserCursors()
   };
 }
 
 var App = module.exports = React.createClass({
 
   getInitialState: function() {
-    var state = getStateFromStores();
-    state.clientX = 0;
-    state.clientY = 0;
-    return state;
+    return getStateFromStores();
   },
 
   componentDidMount: function() {
@@ -50,16 +48,26 @@ var App = module.exports = React.createClass({
   },
 
   trackCursor: function(event) {
-    this.setState({
+    if (!this.state.auth.authenticated)
+      return;
+
+    var pos = {
       clientY: event.clientY,
       clientX: event.clientX
-    });
+    };
+    //this.setState(pos);
+    StampActionCreators.trackCursor(pos);
   },
 
   render: function() {
     var stamps = this.state.stamps.map(function(stamp) {
       return <Stamp stamp={stamp} />;
     });
+    var cursors = this.state.userCursors.map(function(stamp) {
+      console.log(stamp);
+      return <Stamp stamp={stamp} />;
+    });
+
     var style = { position: 'fixed', left: 0, right: 0, bottom: 0, top: 0 };
     return (
       <div onClick={this.handleClick} onMouseMove={this.trackCursor} style={style}>
@@ -67,7 +75,7 @@ var App = module.exports = React.createClass({
           {this.renderAuthLink()}
         </ul>
         {stamps}
-        {this.renderStamp()}
+        {cursors}
       </div>
     );
   },
@@ -79,18 +87,6 @@ var App = module.exports = React.createClass({
         <Link to="logout">Logout</Link>
       </li> :
       <li><button onClick={this.signIn}>Sign in</button></li>;
-  },
-
-  renderStamp: function() {
-    if (this.state.auth.authenticated) {
-      var stamp = {
-        x: this.state.clientX,
-        y: this.state.clientY,
-        src: this.state.auth.user.avatar_url
-      };
-      return <Stamp stamp={stamp}/>
-    }
-
   }
 
 });

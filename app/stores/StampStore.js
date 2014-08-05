@@ -6,11 +6,20 @@ var ActionTypes = AppConstants.ActionTypes;
 var Firebase = require('firebase-client');
 
 var CHANGE_EVENT = 'change';
-var _stamps = [];
-var stampsRef = new Firebase(AppConstants.FIREBASE_STAMPS);
 
-stampsRef.on('value', function(snapshot) {
-  _stamps = toArray(snapshot.val() || {});
+var _state = {
+  stamps: [],
+  userCursors: []
+};
+
+var ref = new Firebase(AppConstants.FIREBASE_HOST);
+
+ref.on('value', function(snapshot) {
+  var val = snapshot.val();
+  _state = {
+    stamps: toArray(val.stamps || {}),
+    userCursors: toArray(val.userCursors || {})
+  };
   StampStore.emitChange();
 });
 
@@ -32,25 +41,17 @@ var StampStore = merge(EventEmitter.prototype, {
   },
 
   getAll: function() {
-    return _stamps;
+    return _state.stamps;
+  },
+
+  getUserCursors: function() {
+    return _state.userCursors;
   }
 
 });
 
 StampStore.dispatchToken = AppDispatcher.register(function(payload) {
-  var action = payload.action;
-
-  switch (action.type) {
-    case ActionTypes.ADD_STAMP:
-      _addStamp(action.stamp);
-      break;
-    default:
-  }
-
+  // I don't care about anything ...
 });
-
-function _addStamp(stamp) {
-  stampsRef.push(stamp);
-}
 
 module.exports = StampStore;
