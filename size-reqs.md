@@ -1,0 +1,5 @@
+- use + and - on keyboard
+- change height of avatar based on that state
+- increment by 10px
+- limit range to 10px-150px
+- handle null height since firebase
