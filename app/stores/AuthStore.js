@@ -3,9 +3,6 @@ var merge = require('react/lib/merge');
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var AppConstants = require('../constants/AppConstants');
 var ActionTypes = AppConstants.ActionTypes;
-var Firebase = require('firebase-client');
-var SimpleLogin = require('firebase-simple-login');
-
 var CHANGE_EVENT = 'change';
 
 var state = {
@@ -15,25 +12,19 @@ var state = {
   error: false
 };
 
-var ref = new Firebase(AppConstants.FIREBASE_HOST);
-var auth = new SimpleLogin(ref, handleAuthChange);
-
-function handleAuthChange(err, user) {
-  if (err) {
-    state.error = err;
-  }
-  else {
-    state.error = false;
-    state.authenticated = true;
-    state.user = user;
-  }
-  AuthStore.emitChange();
-}
-
 function signin() {
   state.authenticating = true;
-  AuthStore.emitChange();
-  auth.login('github');
+}
+
+function handleAuthError(error) {
+  state.error = error;
+}
+
+function handleAuthUser(user) {
+  state.error = false;
+  state.user = user;
+  state.authenticated = true;
+  state.authenticating = false;
 }
 
 var AuthStore = merge(EventEmitter.prototype, {
@@ -58,6 +49,17 @@ AuthStore.dispatchToken = AppDispatcher.register(function(payload) {
   switch (action.type) {
     case ActionTypes.SIGN_IN:
       signin();
+      AuthStore.emitChange();
+      break;
+
+    case ActionTypes.RECEIVE_AUTH_ERROR:
+      handleAuthError(action.error);
+      AuthStore.emitChange();
+      break;
+
+    case ActionTypes.RECEIVE_AUTH_USER:
+      handleAuthUser(action.user);
+      AuthStore.emitChange();
       break;
 
     default:

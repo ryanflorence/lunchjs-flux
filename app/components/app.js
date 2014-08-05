@@ -63,9 +63,6 @@ var App = module.exports = React.createClass({
     var style = { position: 'fixed', left: 0, right: 0, bottom: 0, top: 0 };
     return (
       <div onClick={this.handleClick} onMouseMove={this.trackCursor} style={style}>
-        <h1>STAMPS!</h1>
-        <div>authenticated: {this.state.auth.authenticated ? 'yes' : 'no'}</div>
-        <div>authenticating: {this.state.auth.authenticating ? 'yes' : 'no'}</div>
         <ul>
           {this.renderAuthLink()}
         </ul>

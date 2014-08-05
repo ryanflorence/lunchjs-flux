@@ -6,7 +6,9 @@ module.exports = {
 
   ActionTypes: keyMirror({
     SIGN_IN: null,
-    ADD_STAMP: null
+    ADD_STAMP: null,
+    RECEIVE_AUTH_ERROR: null,
+    RECEIVE_AUTH_USER: null
   }),
 
   PayloadSources: keyMirror({

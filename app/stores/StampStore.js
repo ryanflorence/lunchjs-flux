@@ -3,19 +3,12 @@ var merge = require('react/lib/merge');
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var AppConstants = require('../constants/AppConstants');
 var ActionTypes = AppConstants.ActionTypes;
-var AuthStore = require('./AuthStore');
 
 var CHANGE_EVENT = 'change';
 
-var _auth = AuthStore.get();
-AuthStore.addChangeListener(function() {
-  _auth = AuthStore.get();
-  StampStore.emitChange();
-});
-
 var _stamps = [
-  {src: 'http://ryanflorence.com/blog/img/roast-beef.jpg', x: 10, y: -10 },
-  {src: 'http://ryanflorence.com/blog/img/roast-beef.jpg', x: 100, y: -100 }
+  {src: 'http://ryanflorence.com/blog/img/roast-beef.jpg', x: 10, y: 200 },
+  {src: 'http://ryanflorence.com/blog/img/roast-beef.jpg', x: 100, y: 100 }
 ];
 
 function _addStamp(stamp) {
@@ -34,7 +27,7 @@ var StampStore = merge(EventEmitter.prototype, {
   },
 
   getAll: function() {
-    return _auth.authenticated ? _stamps : [];
+    return _stamps;
   }
 
 });
@@ -46,7 +39,6 @@ StampStore.dispatchToken = AppDispatcher.register(function(payload) {
     case ActionTypes.ADD_STAMP:
       _addStamp(action.stamp);
       break;
-
     default:
   }
 
