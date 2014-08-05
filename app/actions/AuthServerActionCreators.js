@@ -2,7 +2,7 @@ var AppConstants = require('../constants/AppConstants.js');
 var ActionTypes = AppConstants.ActionTypes;
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 
-var AuthActionCreators = {
+var AuthServerActionCreators = {
 
   receiveUser: function(user) {
     AppDispatcher.handleServerAction({
@@ -26,4 +26,4 @@ var AuthActionCreators = {
 
 };
 
-module.exports = AuthActionCreators;
+module.exports = AuthServerActionCreators;

@@ -12,7 +12,7 @@ var _state = {
   userCursors: []
 };
 
-var ref = new Firebase(AppConstants.FIREBASE_HOST);
+var ref = new Firebase(AppConstants.FIREBASE_HOST).limit(1000);
 
 ref.on('value', function(snapshot) {
   var val = snapshot.val();
