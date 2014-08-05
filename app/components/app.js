@@ -48,43 +48,48 @@ var App = module.exports = React.createClass({
   },
 
   trackCursor: function(event) {
-    if (!this.state.auth.authenticated)
-      return;
-
-    var pos = {
-      clientY: event.clientY,
-      clientX: event.clientX
-    };
-    //this.setState(pos);
-    StampActionCreators.trackCursor(pos);
+    if (this.state.auth.authenticated)
+      StampActionCreators.trackCursor({
+        clientY: event.clientY,
+        clientX: event.clientX
+      });
   },
 
   render: function() {
     var stamps = this.state.stamps.map(function(stamp) {
       return <Stamp stamp={stamp} />;
     });
+
     var cursors = this.state.userCursors.map(function(stamp) {
-      console.log(stamp);
       return <Stamp stamp={stamp} />;
     });
 
-    var style = { position: 'fixed', left: 0, right: 0, bottom: 0, top: 0 };
+    var padClass = 'Pad';
+    if (this.state.auth.authenticated)
+      padClass += ' Pad--authenticated';
+
     return (
-      <div onClick={this.handleClick} onMouseMove={this.trackCursor} style={style}>
-        <ul>
+      <div className="App" >
+        <ul className="Nav">
           {this.renderAuthLink()}
         </ul>
-        {stamps}
-        {cursors}
+        <div
+          className={padClass}
+          onClick={this.handleClick}
+          onMouseMove={this.trackCursor}
+        >
+          {stamps}
+          {cursors}
+        </div>
       </div>
     );
   },
 
   renderAuthLink: function() {
     return this.state.auth.authenticated ?
-      <li>
-        <img src={this.state.auth.user.avatar_url} height="50"/>
-        <Link to="logout">Logout</Link>
+      <li className="Nav__Item">
+        <img className="Nav__Img" src={this.state.auth.user.avatar_url} height="24"/>
+        Logged in as {this.state.auth.user.name}: <Link className="Nav__Link" to="logout">Logout</Link>
       </li> :
       <li><button onClick={this.signIn}>Sign in</button></li>;
   }
