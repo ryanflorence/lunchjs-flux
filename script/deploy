@@ -1,0 +1,4 @@
+#!/bin/sh
+NODE_ENV=production ./node_modules/.bin/webpack
+rsync -avz public/ ryanflor@ryanflorence.com:~/public_html/stamps/
+
