@@ -9,9 +9,11 @@ module.exports = {
 
   ActionTypes: keyMirror({
     SIGN_IN: null,
+    LOGOUT: null,
     ADD_STAMP: null,
     RECEIVE_AUTH_ERROR: null,
     RECEIVE_AUTH_USER: null,
+    RECEIVE_AUTH_LOGOUT: null,
     TRACK_STAMP: null
   }),
 

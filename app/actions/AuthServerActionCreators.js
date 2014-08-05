@@ -16,6 +16,12 @@ var AuthActionCreators = {
       type: ActionTypes.RECEIVE_AUTH_ERROR,
       error: error
     });
+  },
+
+  receiveLogout: function() {
+    AppDispatcher.handleServerAction({
+      type: ActionTypes.RECEIVE_AUTH_LOGOUT
+    });
   }
 
 };

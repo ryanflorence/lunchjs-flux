@@ -12,6 +12,13 @@ var AuthActionCreators = {
     FirebaseUtils.login();
   },
 
+  logout: function() {
+    AppDispatcher.handleViewAction({
+      type: ActionTypes.LOGOUT
+    });
+    FirebaseUtils.logout();
+  },
+
   receiveUser: function(user) {
     AppDispatcher.handleServerAction({
       type: ActionTypes.RECEIVE_AUTH_USER,

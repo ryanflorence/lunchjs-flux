@@ -27,6 +27,11 @@ function handleAuthUser(user) {
   state.authenticating = false;
 }
 
+function handleAuthLogout() {
+  state.user = {};
+  state.authenticated = false;
+}
+
 var AuthStore = merge(EventEmitter.prototype, {
 
   emitChange: function() {
@@ -59,6 +64,11 @@ AuthStore.dispatchToken = AppDispatcher.register(function(payload) {
 
     case ActionTypes.RECEIVE_AUTH_USER:
       handleAuthUser(action.user);
+      AuthStore.emitChange();
+      break;
+
+    case ActionTypes.RECEIVE_AUTH_LOGOUT:
+      handleAuthLogout();
       AuthStore.emitChange();
       break;
 

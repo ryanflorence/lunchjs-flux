@@ -34,6 +34,10 @@ var App = module.exports = React.createClass({
     AuthActionCreators.signIn();
   },
 
+  logout: function() {
+    AuthActionCreators.logout();
+  },
+
   addStamp: function(event) {
     StampActionCreators.addStamp({
       x: event.clientX,
@@ -102,7 +106,7 @@ var App = module.exports = React.createClass({
 
   renderRightNav: function() {
     return (this.state.auth.authenticated) ?
-      <li><Link className="Nav__Link" to="logout">Logout</Link></li> :
+      <li><button onClick={this.logout}>Logout</button></li> :
       <li><button onClick={this.signIn}>Sign in</button></li>;
   }
 
