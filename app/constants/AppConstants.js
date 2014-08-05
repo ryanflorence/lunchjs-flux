@@ -3,7 +3,8 @@ var keyMirror = require('react/lib/keyMirror');
 module.exports = {
 
   ActionTypes: keyMirror({
-    SIGN_IN: null
+    SIGN_IN: null,
+    ADD_STAMP: null
   }),
 
   PayloadSources: keyMirror({

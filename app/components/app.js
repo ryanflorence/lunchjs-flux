@@ -2,11 +2,14 @@
 var React = require('react');
 var Link = require('react-router').Link;
 var AuthStore = require('../stores/AuthStore');
+var StampStore = require('../stores/StampStore');
 var AuthActionCreators = require('../actions/AuthActionCreators');
+var StampActionCreators = require('../actions/StampActionCreators');
 
 function getStateFromStores() {
   return {
-    auth: AuthStore.get()
+    auth: AuthStore.get(),
+    stamps: StampStore.getAll()
   };
 }
 
@@ -49,9 +52,13 @@ var App = module.exports = React.createClass({
   },
 
   renderIndex: function() {
+    var stamps = this.state.stamps.map(function(stamp) {
+      return <div><img src={stamp.src} height="50" /></div>
+    });
     return (
       <div>
         <h2>Index</h2>
+        {stamps}
       </div>
     );
   }
