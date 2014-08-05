@@ -17,20 +17,6 @@ var AuthActionCreators = {
       type: ActionTypes.LOGOUT
     });
     FirebaseUtils.logout();
-  },
-
-  receiveUser: function(user) {
-    AppDispatcher.handleServerAction({
-      type: ActionTypes.RECEIVE_AUTH_USER,
-      user: user
-    });
-  },
-
-  receiveError: function(error) {
-    AppDispatcher.handleServerAction({
-      type: ActionTypes.RECEIVE_AUTH_ERROR,
-      error: error
-    });
   }
 
 };
