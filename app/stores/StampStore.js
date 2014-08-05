@@ -26,7 +26,6 @@ function _addStamp(stamp) {
 var StampStore = merge(EventEmitter.prototype, {
 
   emitChange: function() {
-    console.log('changing');
     this.emit(CHANGE_EVENT);
   },
 
