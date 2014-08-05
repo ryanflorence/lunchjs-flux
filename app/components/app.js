@@ -40,7 +40,7 @@ var App = module.exports = React.createClass({
         <ul>
           {this.renderAuthLink()}
         </ul>
-        {this.props.activeRouteHandler() || this.renderIndex()}
+        {this.renderStamps()}
       </div>
     );
   },
@@ -51,16 +51,10 @@ var App = module.exports = React.createClass({
       <li><button onClick={this.signIn}>Sign in</button></li>;
   },
 
-  renderIndex: function() {
-    var stamps = this.state.stamps.map(function(stamp) {
+  renderStamps: function() {
+    return this.state.stamps.map(function(stamp) {
       return <div><img src={stamp.src} height="50" /></div>
     });
-    return (
-      <div>
-        <h2>Index</h2>
-        {stamps}
-      </div>
-    );
   }
 
 });
