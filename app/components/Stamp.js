@@ -17,7 +17,7 @@ var Stamp = module.exports = React.createClass({
       top: this.state.stamp.y,
       position: 'fixed'
     };
-    return <img height="50" src={this.state.stamp.src} style={style}/>;
+    return <img height="50" src={this.state.stamp.src} style={style} key={this.state.stamp._key}/>;
   }
 
 });

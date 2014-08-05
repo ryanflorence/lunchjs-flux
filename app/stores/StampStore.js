@@ -25,8 +25,10 @@ ref.on('value', function(snapshot) {
 
 function toArray(obj) {
   var arr = [];
-  for (var key in obj)
+  for (var key in obj) {
+    obj._key = key;
     arr.push(obj[key]);
+  }
   return arr;
 }
 
