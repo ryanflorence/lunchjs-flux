@@ -21,6 +21,7 @@ var App = module.exports = React.createClass({
 
   componentDidMount: function() {
     AuthStore.addChangeListener(this._onChange);
+    StampStore.addChangeListener(this._onChange);
   },
 
   _onChange: function() {
@@ -29,6 +30,14 @@ var App = module.exports = React.createClass({
 
   signIn: function() {
     AuthActionCreators.signIn();
+  },
+
+  addStamp: function(event) {
+    StampActionCreators.addStamp({
+      x: event.clientX,
+      y: event.clientY,
+      src: 'http://ryanflorence.com/blog/img/roast-beef.jpg'
+    });
   },
 
   render: function() {
@@ -52,9 +61,15 @@ var App = module.exports = React.createClass({
   },
 
   renderStamps: function() {
-    return this.state.stamps.map(function(stamp) {
+    var stamps = this.state.stamps.map(function(stamp) {
       return <div><img src={stamp.src} height="50" /></div>
     });
+    return (
+      <div>
+        <button onClick={this.addStamp}>Add Stamp</button>
+        {stamps}
+      </div>
+    );
   }
 
 });

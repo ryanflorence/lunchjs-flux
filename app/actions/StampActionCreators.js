@@ -4,9 +4,10 @@ var AppDispatcher = require('../dispatcher/AppDispatcher');
 
 var StampActionCreators = {
 
-  addStamp: function() {
+  addStamp: function(stamp) {
     AppDispatcher.handleViewAction({
-      type: ActionTypes.ADD_STAMP
+      type: ActionTypes.ADD_STAMP,
+      stamp: stamp
     });
   }
 

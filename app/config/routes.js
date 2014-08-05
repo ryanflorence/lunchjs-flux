@@ -5,8 +5,7 @@ var Route = Router.Route;
 
 module.exports = (
   <Routes location="history">
-    <Route name="index" path="/" handler={require('../components/app')} />
-    <Route name="signin" handler={require('../components/signin')} />
+    <Route handler={require('../components/app')} />
     <Route name="logout" handler={require('../components/logout')} />
   </Routes>
 );

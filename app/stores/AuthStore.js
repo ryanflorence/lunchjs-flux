@@ -15,7 +15,8 @@ var state = {
   error: false
 };
 
-var auth = new SimpleLogin(new Firebase(AppConstants.FIREBASE_HOST, handleAuthChange));
+var ref = new Firebase(AppConstants.FIREBASE_HOST);
+var auth = new SimpleLogin(ref, handleAuthChange);
 
 function handleAuthChange(err, user) {
   if (err) {

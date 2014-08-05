@@ -18,18 +18,15 @@ var _stamps = [
   {src: 'http://ryanflorence.com/blog/img/roast-beef.jpg', x: 100, y: -100 }
 ];
 
-function _addStamp() {
-  setTimeout(function() {
-    _stamps.push({
-      src: 'http://ryanflorence.com/blog/img/roast-beef.jpg', x: 100, y: -100
-    });
-    StampStore.emitChange();
-  }, 1000);
+function _addStamp(stamp) {
+  _stamps.push(stamp)
+  StampStore.emitChange();
 }
 
 var StampStore = merge(EventEmitter.prototype, {
 
   emitChange: function() {
+    console.log('changing');
     this.emit(CHANGE_EVENT);
   },
 
@@ -48,7 +45,7 @@ StampStore.dispatchToken = AppDispatcher.register(function(payload) {
 
   switch (action.type) {
     case ActionTypes.ADD_STAMP:
-      _addStamp();
+      _addStamp(action.stamp);
       break;
 
     default:
