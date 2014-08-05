@@ -16,5 +16,10 @@ function login() {
   var ref = new Firebase(AppConstants.FIREBASE_HOST);
   var auth = new SimpleLogin(ref, handleAuthChange);
   auth.login('github');
-};
+}
+
+function addStamp(stamp) {
+  var ref = new Firebase(AppConstants.FIREBASE_STAMPS);
+  ref.push(stamp);
+}
 

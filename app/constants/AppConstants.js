@@ -1,8 +1,12 @@
 var keyMirror = require('react/lib/keyMirror');
 
+var HOST = 'https://lunchjs-flux.firebaseio.com';
+
 module.exports = {
 
-  FIREBASE_HOST: 'https://lunchjs-flux.firebaseio.com',
+  FIREBASE_HOST: HOST,
+
+  FIREBASE_STAMPS: HOST + '/stamps',
 
   ActionTypes: keyMirror({
     SIGN_IN: null,

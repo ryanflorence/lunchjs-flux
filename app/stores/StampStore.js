@@ -3,17 +3,22 @@ var merge = require('react/lib/merge');
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var AppConstants = require('../constants/AppConstants');
 var ActionTypes = AppConstants.ActionTypes;
+var Firebase = require('firebase-client');
 
 var CHANGE_EVENT = 'change';
+var _stamps = [];
+var stampsRef = new Firebase(AppConstants.FIREBASE_STAMPS);
 
-var _stamps = [
-  {src: 'http://ryanflorence.com/blog/img/roast-beef.jpg', x: 10, y: 200 },
-  {src: 'http://ryanflorence.com/blog/img/roast-beef.jpg', x: 100, y: 100 }
-];
-
-function _addStamp(stamp) {
-  _stamps.push(stamp)
+stampsRef.on('value', function(snapshot) {
+  _stamps = toArray(snapshot.val() || {});
   StampStore.emitChange();
+});
+
+function toArray(obj) {
+  var arr = [];
+  for (var key in obj)
+    arr.push(obj[key]);
+  return arr;
 }
 
 var StampStore = merge(EventEmitter.prototype, {
@@ -43,5 +48,9 @@ StampStore.dispatchToken = AppDispatcher.register(function(payload) {
   }
 
 });
+
+function _addStamp(stamp) {
+  stampsRef.push(stamp);
+}
 
 module.exports = StampStore;
