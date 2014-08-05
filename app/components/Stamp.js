@@ -3,13 +3,21 @@ var React = require('react');
 
 var Stamp = module.exports = React.createClass({
 
+  getInitialState: function() {
+    return { stamp: this.props.stamp };
+  },
+
+  componentWillReceiveProps: function(props) {
+    this.setState(props);
+  },
+
   render: function() {
     var style = {
-      left: this.props.stamp.x,
-      top: this.props.stamp.y,
+      left: this.state.stamp.x,
+      top: this.state.stamp.y,
       position: 'fixed'
     };
-    return <img height="50" src={this.props.stamp.src} style={style}/>;
+    return <img height="50" src={this.state.stamp.src} style={style}/>;
   }
 
 });

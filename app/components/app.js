@@ -17,7 +17,10 @@ function getStateFromStores() {
 var App = module.exports = React.createClass({
 
   getInitialState: function() {
-    return getStateFromStores();
+    var state = getStateFromStores();
+    state.clientX = 0;
+    state.clientY = 0;
+    return state;
   },
 
   componentDidMount: function() {
@@ -34,11 +37,10 @@ var App = module.exports = React.createClass({
   },
 
   addStamp: function(event) {
-    console.log(event.clientX, event.clientY);
     StampActionCreators.addStamp({
       x: event.clientX,
       y: event.clientY,
-      src: 'http://ryanflorence.com/blog/img/roast-beef.jpg'
+      src: this.state.auth.user.avatar_url
     });
   },
 
@@ -47,13 +49,20 @@ var App = module.exports = React.createClass({
       this.addStamp(event);
   },
 
+  trackCursor: function(event) {
+    this.setState({
+      clientY: event.clientY,
+      clientX: event.clientX
+    });
+  },
+
   render: function() {
     var stamps = this.state.stamps.map(function(stamp) {
       return <Stamp stamp={stamp} />;
     });
     var style = { position: 'fixed', left: 0, right: 0, bottom: 0, top: 0 };
     return (
-      <div onClick={this.handleClick} style={style}>
+      <div onClick={this.handleClick} onMouseMove={this.trackCursor} style={style}>
         <h1>STAMPS!</h1>
         <div>authenticated: {this.state.auth.authenticated ? 'yes' : 'no'}</div>
         <div>authenticating: {this.state.auth.authenticating ? 'yes' : 'no'}</div>
@@ -61,14 +70,30 @@ var App = module.exports = React.createClass({
           {this.renderAuthLink()}
         </ul>
         {stamps}
+        {this.renderStamp()}
       </div>
     );
   },
 
   renderAuthLink: function() {
     return this.state.auth.authenticated ?
-      <li><Link to="logout">Logout</Link></li> :
+      <li>
+        <img src={this.state.auth.user.avatar_url} height="50"/>
+        <Link to="logout">Logout</Link>
+      </li> :
       <li><button onClick={this.signIn}>Sign in</button></li>;
+  },
+
+  renderStamp: function() {
+    if (this.state.auth.authenticated) {
+      var stamp = {
+        x: this.state.clientX,
+        y: this.state.clientY,
+        src: this.state.auth.user.avatar_url
+      };
+      return <Stamp stamp={stamp}/>
+    }
+
   }
 
 });
